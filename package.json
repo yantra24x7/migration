@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.config.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    
     "build_lib": "ng build ngx-text-diff",
     "copy-license": "copyfiles ./projects/ngx-text-diff/LICENSE ./dist/ngx-text-diff",
     "copy-readme": "copyfiles ./projects/ngx-text-diff/README.md ./dist/ngx-text-diff",

@@ -7,7 +7,7 @@ import { environment} from '../../../../environments/environment';
 @Injectable({      
   providedIn: 'root'
 })
-export class Tokentinterceptor implements HttpInterceptor{
+export class ApiPrefixInterceptor implements HttpInterceptor{
   encodedToken: string;
   constructor(private token:TokenService) { 
 }
@@ -15,7 +15,7 @@ export class Tokentinterceptor implements HttpInterceptor{
   intercept(request : HttpRequest<any>, next : HttpHandler): Observable<HttpEvent<any>> {
  
     if (!/^(http|https):/i.test(request.url)) {
-      if (request.url.includes('/register')) {
+      if (request.url.includes('login && register')) {
           request = request.clone({ url: environment.serverUrl + request.url });
       }
       else {

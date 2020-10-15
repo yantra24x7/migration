@@ -34,9 +34,9 @@ export class FilepathService {
   {console.log(params)
    return this.http.post('/program_confs',params)
   }
-  edit(value)
+  edit(value,val)
   {
-    return this.http.put('program_confs/125',value)
+    return this.http.put('program_confs/'+value,val)
   }
   machine(tenantid):Observable<any>{
      return this.http.get('/machines?tenant_id='+tenantid)

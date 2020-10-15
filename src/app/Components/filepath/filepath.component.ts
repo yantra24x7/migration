@@ -37,7 +37,7 @@ export class FilepathComponent implements OnInit {
   }
   filepath_edit(shift, id): void{
 
-    const dialogRef = this.dialog.open(Popup, {
+    const dialogRef = this.dialog.open(Edit, {
       width: '450px',
       data: { edit_shift: shift, shift_id: id }
 
@@ -107,7 +107,9 @@ export class Popup {
   filepath_response:any;
   tenant: any;
   value:any;
-  status:any
+  status:any;
+  hide: boolean = true;
+
   constructor(private service:FilepathService,public dialogRef: MatDialogRef<Popup>,@Inject(MAT_DIALOG_DATA) public data: Popup,private fb:FormBuilder, private filepath: FilepathService) {
    this.value = data;
    console.log(this.value)
@@ -121,7 +123,6 @@ export class Popup {
   ngOnInit() {
 
 
-  if (this.value.new) {
       this.login = this.fb.group({
         ip: ["",Validators.required],
         user_name: ["",Validators.required],
@@ -130,27 +131,10 @@ export class Popup {
         slave_location: ["",Validators.required],
         machine_id:["",Validators.required]
       })
-    } else {
-      this.login = this.fb.group({
-        ip: [this.value.edit_shift.ip,],
-        user_name: [this.value.edit_shift.user_name,],
-        pass: [this.value.edit_shift.pass,],
-        master_location: [this.value.edit_shift.master_location,],
-        slave_location: [this.value.edit_shift.slave_location,],
-        machine_id:[this.value.edit_shift.machine.machine_name,]
-
-      })
-    }
-    //this.login=this.fb.group ({
-      //ip:["",Validators.required],
-      //user_name:["",Validators.required],
-      //pass:["",Validators.required],
-      //master_location:["",Validators.required],
-      //slave_location:["",Validators.required],
-      //machine_id:["",Validators.required]
-
- //})
-  this.filepath.tenant_id().pipe(untilDestroyed(this)).subscribe(res => {
+     
+    
+    
+  this.service.tenant_id().pipe(untilDestroyed(this)).subscribe(res => {
       console.log(res);
       this.filepath_response=res;
       console.log(localStorage.getItem('token'));});
@@ -165,35 +149,98 @@ export class Popup {
   
   loginform() {
     console.log(this.login.value);
-    this.filepath.popup(this.login.value).pipe(untilDestroyed(this)).subscribe(res => {
+    this.service.popup(this.login.value).pipe(untilDestroyed(this)).subscribe(res => {
       // console.log(res.status);
-      // Swal.fire(res.status)
+      Swal.fire(res['status'])
       
       this.dialogRef.close();
   })
 
-    //if (this.value.new) {
-      //this.myLoader = true;
+   
+  }
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+    event.preventDefault();
+    }
+   }
+   
+   ngOnDestroy(){
 
-      //this.filepath.popup(this.login.value).pipe(untilDestroyed(this)).subscribe(res => {
-        //console.log(res);
-        //this.myLoader = false;
+  }
+  
+}
 
-        //this.toast.success('Created Successfully')
-        //this.dialogRef.close();
-      //})
-    //} else {
+
+@Component({
+  selector: 'edit-page',
+  templateUrl: 'edit.html',
+  styleUrls: ['./filepath.component.scss']
+
+})
+export class Edit {
+  login:FormGroup;
+  http: any;
+  machinesArray: any;
+  tenant_id: string;
+  headers: string;
+  tenant: any;
+  value:any;
+  status:any
+  service_response: any;
+  add_val: any;
+  hide: boolean = true;
+
+  constructor(private service:FilepathService,public dialogRef: MatDialogRef<Edit>,@Inject(MAT_DIALOG_DATA) public data: Edit,private fb:FormBuilder, private filepath: FilepathService) {
+   this.value = data;
+   console.log(this.value)
+    this.tenant=localStorage.getItem('tenant_id')
+  
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  onSelect(id: any) {
+    throw new Error("Method not implemented.");
+  }
+  ngOnInit() {
+
+
+    this.login = this.fb.group({
+      ip: [this.value.edit_shift.ip,],
+      user_name: [this.value.edit_shift.user_name,],
+      pass: [this.value.edit_shift.pass,],
+      master_location: [this.value.edit_shift.master_location,],
+      slave_location: [this.value.edit_shift.slave_location,],
+      machine_id:[this.value.edit_shift.machine.id,]
+
+    })
+  this.service.tenant_id().pipe(untilDestroyed(this)).subscribe(res => {
+      console.log(res);
+      this.service_response=res;
+      console.log(localStorage.getItem('token'));});
+
+      this.service.machine(this.tenant).pipe(untilDestroyed(this)).subscribe(res =>{
+      console.log(res);
+  })
+  }
+ 
+  logintest() {
+    console.log(this.login.value);
+
+    this.add_val = this.login.value 
+    console.log(this.value.edit_shift.id)
+    // this.add_val["slave_location"] =  "/home/part_program";
+    console.log(this.add_val);
+    this.service.edit(this.value.edit_shift.id,this.add_val).pipe(untilDestroyed(this)).subscribe(res => {
+       Swal.fire("Updated Successfully!")
       
-       
-      //this.filepath.edit_filepath(this.value.shift_id,data).
-      //pipe(untilDestroyed(t his)).subscribe( res => {
-        //console.log(res);
-        //this.myLoader = false;
+      this.dialogRef.close();
+  })
 
-        //this.toast.success('Updated Successfully')
-        //this.dialogRef.close();
-      //})
-    //}
+    
   }
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;

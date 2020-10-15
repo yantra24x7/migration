@@ -49,6 +49,7 @@ export class ReportComponent implements OnInit {
       operator_id:["",Validators.required],
       start_date:["",Validators.required],
       end_date:["",Validators.required],
+      report_type:["",Validators.required]
       // report_type:["",Validators.required],
     })
     
@@ -89,11 +90,11 @@ export class ReportComponent implements OnInit {
 
   getmachine(value){
     console.log(value)
-    this.service.report(value,this.tenant).subscribe(res =>{
-      console.log(res)
-      this.selectsplit = res.data;
+    // this.service.report(value,this.tenant).subscribe(res =>{
+    //   console.log(res)
+    //   this.selectsplit = res.data;
 
-    })
+    // })
 
     this.wise = value;
     console.log( this.wise)

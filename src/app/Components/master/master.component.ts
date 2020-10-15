@@ -6,6 +6,8 @@ import Swal from 'sweetalert2'
 import {ProgramListService} from '../../Service/app/programlist.service';
 import { MatTableDataSource } from '@angular/material';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @Component({
   selector: 'app-master',
   templateUrl: './master.component.html',
@@ -46,13 +48,17 @@ export class MasterComponent implements OnInit {
 
    slavelist: string[] = ['position', 'name', 'weight', 'symbol','action'];
   
-  openDialog(): void {
+  openDialog(machine): void {
     const dialogRef = this.dialog.open(Dialog, {
       width: '250px',
+      data: { edit_shift: machine}
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.ngOnInit();
+
     });
   }
   ngOnInit() {
@@ -108,11 +114,15 @@ export class Dialog {
   test:FormGroup;
   fileName1:any;
   machine_response: any;
-  tenant: string;
   file2:any;
+  value:any;
   daterangepicker:any;
-  constructor(public dialogRef: MatDialogRef<Dialog>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private service:ProgramListService) {
-  this.tenant = localStorage.getItem('tenant_id')  
+  tenant:any;
+  constructor(private http: HttpClient,public dialogRef: MatDialogRef<Dialog>,@Inject(MAT_DIALOG_DATA) public data: any,private fb:FormBuilder,private service:ProgramListService) {
+  this.tenant = localStorage.getItem('tenant_id')  ;
+  this.value = data;
+  console.log(this.value)
+  // console.log(this.machine_id )
   }
 
   onNoClick(): void {
@@ -128,7 +138,7 @@ export class Dialog {
   ngOnInit()
   {
     this.test=this.fb.group ({
-      machine_id:["",],
+      machine_id:[this.value.edit_shift],
       user_name:["",],
       revision_no:["",],
       date:["",],
@@ -145,6 +155,12 @@ export class Dialog {
   
   testform(val)
   {
+    let headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer " + localStorage.getItem("token")
+      })
+    }  
     console.log(this.test.value.revision_no);
     var machine = new FormData();
     machine.append('machine_id', this.test.value.machine_id);
@@ -154,11 +170,15 @@ export class Dialog {
     machine.append('date',this.test.value.date);
     machine.append('file', this.file2);
     console.log(machine)
-    machine.forEach((value, key) => {
-       console.log(key + value)
-      });
-    this.service.file_upload(machine).pipe(untilDestroyed(this)).subscribe(res =>{
-      console.log(res)
+   
+    this.http.post("https://app.yantra24x7.com/api/v1/file_upload",machine, { headers: { Authorization: "Bearer " + localStorage.getItem("token") } }).subscribe(res =>{
+      
+      if (res['status'] != null) {
+        Swal.fire(res['status'])
+      }
+      this.dialogRef.close();
+
+
 
     })
 

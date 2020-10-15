@@ -10,6 +10,9 @@
           <mat-icon class="v-align-middle display">add_alert</mat-icon>
           <span class="v-align-middle">Overall Alert Report</span>
         </h2>
+
+        <button type="text" class="view_btn mr-2" mat-button (click) = toggleDisplay()>View Chart</button>
+
         <div class="table_search">
           <input class="form-control" (keyup)="dolly($event.target.value)" type="text" name="search" [(ngModel)]="searchText" placeholder="Search">
         </div>
@@ -54,12 +57,20 @@
           <!-- <mat-paginator [length]="total_count" [pageSize]="page_size" [pageSizeOptions]="pageSizeOptions"
           (page)="pageEvent($event)">
         </mat-paginator> -->
-
-        </mat-card-content>
-        <mat-card-content *ngIf="alertreport?.length==0" class="no_data_found">
+        <div *ngIf="alertreport?.length==0" class="no_data_found">
           <h2>No data found</h2>
+        </div>
         </mat-card-content>
+        <!-- <mat-card-content *ngIf="alertreport?.length==0" class="no_data_found">
+          <h2>No data found</h2>
+        </mat-card-content> -->
       </mat-card>
+  </div>
+
+  <div class="view_graph" [hidden] = "isShow">
+    <figure class="highcharts-figure">
+      <div id="container"></div>
+    </figure>
   </div>
   </div>
 </section>

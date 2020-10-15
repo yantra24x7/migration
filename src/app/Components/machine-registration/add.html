@@ -47,7 +47,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Select Machine</mat-label>
-                <mat-select matNativeControl required>
+                <mat-select matNativeControl required formControlName="machine_model">
                     <mat-option value="Select Machine" disabled>Select Machine</mat-option>
                     <mat-option value="Ethernet" (click)="machineSelect('Ethernet')">Ethernet</mat-option>
                     <mat-option value="RS232" (click)="machineSelect('RS232')">RS232</mat-option>

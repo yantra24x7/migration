@@ -23,10 +23,10 @@ export class AlarmHistoryService {
    
     return this.http.get('operators?tenant_id='+tenantId);
   }
-  // table(register) {
-  // console.log(register)
-  //   return this.http.get('alarm_reports?tenant_id='+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date + '&&machine_id=' + register.machine_id + '&&shift_id=' + register.shift_id + '&&report_type=' +register.report_type + '&&Operatorwise=' +register.operator_id)
-  // }
+  table(register) {
+  console.log(register)
+    return this.http.get('alarm_reports?tenant_id='+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date + '&&machine_id=' + register.machine_id + '&&shift_id=' + register.shift_id + '&&report_type=' +register.report_type + '&&Operatorwise=' +register.operator_id)
+  }
   shiftidentity(tenantId):Observable<any>{
     return this.http.get('shifts?tenant_id='+tenantId)
   }

@@ -18,7 +18,7 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Controller Model Number</mat-label>
-                    <input matInput formControlName="machine_model" type="text" required>
+                    <input matInput formControlName="controller_type" type="text" required>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Machine Serial Number</mat-label>
@@ -44,7 +44,7 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <mat-select matNativeControl placeholder="Select Machine Type"  required>
+                    <mat-select matNativeControl placeholder="Select Machine Type" formControlName="machine_model" required>
                         <mat-option value="Select Machine Name" disabled>Select Machine Type</mat-option>
                         <mat-option value="Ethernet">Ethernet</mat-option>
                         <mat-option value="RS232">RS232</mat-option>

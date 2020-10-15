@@ -175,11 +175,12 @@
                   <tr mat-header-row *matHeaderRowDef="powerconnected"></tr>
                   <tr mat-row *matRowDef="let row; columns: powerconnected;"></tr>
                 </table>
-
+                <div *ngIf="logfh?.length==0" class="no_data_found">
+                  <h2>No data found</h2>
+                </div>
+              
               </mat-card-content>
-              <!-- <mat-card-content *ngIf="connectionlog.length==0" class="no_data_found">
-                <h2>No data found</h2>
-              </mat-card-content>          -->
+                   
             </mat-card>
           </div>
         </div>

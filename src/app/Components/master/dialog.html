@@ -27,7 +27,7 @@
                     <input matInput formControlName="revision_no" type="text">
                 </mat-form-field>
 
-                <div class="date_picker">
+                <!-- <div class="date_picker">
                     <ejs-daterangepicker placeholder='Select a range' [max]='maxDate' [min]='minDate'
                         (click)="daterangepicker.open()" formControlName="date">
                         <e-presets>
@@ -37,7 +37,7 @@
                             <e-preset label="Last Year" [start]='yearStart' [end]='yearEnd'></e-preset>
                         </e-presets>
                     </ejs-daterangepicker>
-                </div>
+                </div> -->
                 <!-- <mat-form-field class="upload_file">
                     <input matInput placeholder="Choose File"
                     (click)="selectAssetFile.click()" [readonly]="true">
@@ -45,7 +45,15 @@
                     </mat-form-field>
                     <input #selectAssetFile type='file' (change)="upload($event.target.files)" 
                     style="display: none;"> -->
-
+                    <div class="filter_field">
+                        <mat-form-field>
+                          <mat-label>From Date</mat-label>
+                          <input matInput [matDatepicker]="picker" formControlName="date" (click)="picker.open()">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+          
 
                     <div class="form-group custom_file_upload">
                         <label for="file">Choose File</label><br /> <input type="file" id="file" (change)="fileUpload1($event)">

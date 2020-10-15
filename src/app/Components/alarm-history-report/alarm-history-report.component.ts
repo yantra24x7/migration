@@ -77,72 +77,31 @@ export class AlarmHistoryReportComponent implements OnInit {
 
 
 loginfunc(){
-  // console.log(this.login.value)
+ console.log(this.login.value)
   
 
   
   let register = this.login.value;
-  // register.start_date = this.login.value.date[0];
-  // register.end_date = this.login.value.date[1];
+  console.log(register)
   register.tenant_id = this.tenant;
- console.log(register);
- if (register.machine_id == undefined && register.operator_id != null) {
+
+this.service.table(register).subscribe(res =>{
+  console.log(res);
+})
+
  
 
-  this.http.get("alarm_reports?tenant_id="+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date +  '&&shift_id=' + register.shift_id + '&&report_type=' +register.report_type + '&&operator_id=' +register.operator_id).subscribe(res => {
-   this.reports = res;
-   this.reportList = true;
-   this.dataSource = new MatTableDataSource(this.reports);
-   this.reportList = true;
-  })
-} 
-else if (register.machine_id != undefined && register.operator_id != null) {
+   
 
-  this.http.get("alarm_reports?tenant_id="+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date +  '&&machine_id=' + register.machine_id + '&&report_type=' +register.report_type + '&&operator_id=' +register.operator_id).subscribe(res => {    this.reports = res;
-    this.reportList = true;
-    this.dataSource = new MatTableDataSource(this.reports);
-    this.reportList = true;
-   })
-  }
 
-  else if (register.machine_id == undefined && register.shift_id != undefined) {
 
-    this.http.get("alarm_reports?tenant_id="+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date +  '&&shift_id=' + register.shift_id + '&&report_type=' +register.report_type).subscribe(res => {   
-      this.reports = res;
-      this.reportList = true;
-      this.dataSource = new MatTableDataSource(this.reports);
-      this.reportList = true;
-     })
-    }
-
-    else if (register.machine_id != undefined && register.shift_id == undefined) {
-      this.http.get("alarm_reports?tenant_id="+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date +  '&&machine_id=' + register.machine_id + '&&report_type=' +register.report_type).subscribe(res => {   
-        this.reports = res;
-        this.reportList = true;
-        this.dataSource = new MatTableDataSource(this.reports);
-        this.reportList = true;
-       })
-      }
-
-      else if (register.machine_id == undefined && register.shift_id == undefined) {
-
-        this.http.get("api/v1/alarm_reports?tenant_id="+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date  + '&&report_type=' +register.report_type).subscribe(res => {            
-          this.reports = res;
-          this.reportList = true;
-          this.dataSource = new MatTableDataSource(this.reports);
-          this.reportList = true;
-         })
-        }
-
-        else {
-
-          this.http.get("api/v1/alarm_reports?tenant_id="+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date  + '&&machine_id=' + register.machine_id + '&&shift_id=' + register.shift_id +'&&report_type=' +register.report_type).subscribe(res => {             
-            this.reports = res;
-            this.reportList = true;
-            this.dataSource = new MatTableDataSource(this.reports);
-            this.reportList = true;
-           })
-          }
+          // this.http.get("api/v1/alarm_reports?tenant_id="+ register.tenant_id + '&&start_date=' + register.start_date + '&&end_date=' + register.end_date  + '&&machine_id=' + register.machine_id + '&&shift_id=' + register.shift_id +'&&report_type=' +register.report_type).subscribe(res => {             
+          //   this.reports = res;
+          //   this.reportList = true;
+          //   this.dataSource = new MatTableDataSource(this.reports);
+          //   this.reportList = true;
+          //  })
+         
 }
 
 ngOnDestroy(){

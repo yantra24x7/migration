@@ -37,7 +37,7 @@
 
               <div class="filter_field">
                 <mat-form-field appearance="outline">
-                  <mat-select placeholder="Select type" matNativeControl [(ngModel)]="types"
+                  <mat-select placeholder="Select type" matNativeControl formControlName="report_type"
                   (selectionChange)="getmachine($event.value)" required>
                     
                   
@@ -50,13 +50,12 @@
               </div>
 
 
-              <div class="filter_field" Ng-Switch="selectsplit=='Datewise Utilization' || selectsplit == 'Monthwise Utilization' ">
-                <!-- *ngIf="login.value.report_type === 'ShiftWise' || login.value.report_type === 'OperatorWise'"> -->
+              <div class="filter_field"
+                *ngIf="login.value.report_type === 'ShiftWise' || login.value.report_type === 'OperatorWise'">
                 <mat-form-field appearance="outline">
-                  <mat-select matNativeControl placeholder="Split" required [(ngModel)]="split"
-                    (selectionChange)="check(split.value)" >
+                  <mat-select matNativeControl placeholder="Split" formControlName="split" required ="split" >
                     <mat-option value="">All</mat-option>
-                    <mat-option value="{{impo.value}}" *ngFor="let impo of selectsplit">  {{impo.value}}</mat-option>
+                    <mat-option value="{{impo.value}}" *ngFor="let impo of selecttype">  {{impo.value}}</mat-option>
 
 
 
@@ -88,7 +87,7 @@
                 </mat-form-field>
               </div>
 
-              <div class="filter_field" *ngIf="selecttype === 'ShiftWise'">
+              <div class="filter_field" *ngIf="login.value.report_type === 'ShiftWise' ">
                 <mat-form-field appearance="outline">
                   <mat-select placeholder="Select Shift" matNativeControl required formControlName="shift_id">
                     <mat-option *ngFor="let shift of shift_response" [value]="shift.id">{{shift.shift_no}}
@@ -96,8 +95,8 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <div class="filter_field" *ngIf="selecttype === 'OperatorWise'">
+ 
+              <div class="filter_field" *ngIf="login.value.types === 'OperatorWise' ">
                 <mat-form-field appearance="outline">
                   <mat-select placeholder="Select Operator" matNativeControl required formControlName="operator_id">
                     <mat-option *ngFor="let operator of operator_response" [value]="operator.id">

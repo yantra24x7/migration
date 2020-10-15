@@ -152,10 +152,10 @@ export class HomeComponent implements OnInit {
 
 
     this.login = this.fb.group({
-      name:["",Validators.required],
+      // name:["",Validators.required],
       reason: ["", Validators.required],
-      old_revision_no:["",Validators.required],
-      new_revision_no:["",Validators.required],
+      // old_revision_no:["",Validators.required],
+      // new_revision_no:["",Validators.required],
     })
 
 
@@ -188,7 +188,7 @@ export class HomeComponent implements OnInit {
     }  
 
     //headers.set("Authorization", "Bearer " +localStorage.getItem("token"));
-    this.http.get("http://192.168.0.237:4002/api/v1/machines?tenant_id=" + this.sample_test, headers).subscribe(res => {
+    this.http.get("https://app.yantra24x7.com/api/v1/machines?tenant_id=" + this.sample_test, headers).subscribe(res => {
       console.log(res);
       // console.log(filName);
       this.machinesArray = res;
@@ -237,7 +237,7 @@ console.log(localStorage.getItem("token"))
     // this.ngOnInit();
 
     // this.Compare = false;
-    console.log(this.Compare);
+    console.log(this.Compare); 
     let headers = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ console.log(localStorage.getItem("token"))
     // console.log(machine_id)
     // this.http.get("http:///52.66.140.40/api/v1/file_path?id=" + machine_id, headers).subscribe(res => {
       console.log(machine_id)
-       this.http.get("http://192.168.0.237:4002/api/v1/file_path?id=" + machine_id, headers).subscribe(res => {
+       this.http.get("https://app.yantra24x7.com/api/v1/file_path?id=" + machine_id, headers).subscribe(res => {
       //console.log(res);
       // alert(res.status);
       // alert(res.file_path);
@@ -326,27 +326,27 @@ console.log(localStorage.getItem("token"))
       me.handleChange('right', me.filetext1)
     }
     //this.handleChange('right',right)
-    this.Text1 = me.filetext1
+    this.Text1 = me.filetext1 
   }
   logintest(val) {
     console.log(this.date)
     console.log(this.login.value)
     this.Compare = false;
 
-    console.log(this.Compare)
+    console.log(this.Compare) 
     console.log(this.file2);
     
     var fd = new FormData();
     fd.append('id', this.machineid);
     // fd.append('user_id', this.sample_test.user_id);
     fd.append('reason', this.login.value.reason);
-    fd.append('user_name', this.login.value.name);
+    // fd.append('user_name', this.login.value.name);
     fd.append('slave_file',this.file2);
-    fd.append('date',this.date);
+    // fd.append('date',this.date);
 
     fd.append('file_name', this.filName);
-    fd.append('old_revision_no', this.login.value.old_revision_no);
-    fd.append('new_revision_no', this.login.value.new_revision_no);
+    // fd.append('old_revision_no', this.login.value.old_revision_no);
+    // fd.append('new_revision_no', this.login.value.new_revision_no);
     // let data = {
     //   "id": this.machineid,
     //   "user_id": this.sample_test.user_id,
@@ -358,9 +358,10 @@ console.log(localStorage.getItem("token"))
     console.log(fd);
     //  this.http.post('http:///192.168.0.237:4000/api/v1/compare_reason', fd, { headers: { Authorization: "Bearer " + localStorage.getItem("token") } }).subscribe(res => {
     //    console.log(res);
-       this.http.post("http://192.168.0.237:4002/api/v1/file_move", fd, { headers: { Authorization: "Bearer " + localStorage.getItem("token") } }).subscribe(resp => {
+       this.http.post("https://app.yantra24x7.com/api/v1/file_move", fd, { headers: { Authorization: "Bearer " + localStorage.getItem("token") } }).subscribe(resp => {
       console.log(resp);
       alert(resp['status'])
+      
       this.ngOnInit();
       
       

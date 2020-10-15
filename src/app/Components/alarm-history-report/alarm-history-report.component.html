@@ -43,7 +43,7 @@
                 </mat-form-field>
               </div>
 
-              <div class="filter_field" *ngIf="login.value.report_type === 'ShiftWise'">
+              <div class="filter_field" *ngIf="login.value.report_type === 'ShiftWise' ">
                 <mat-form-field appearance="outline">
                   <mat-select placeholder="Select Shift" matNativeControl required formControlName="shift_id">
                     <mat-option *ngFor="let shift of shift_response" [value]="shift.id">{{shift.shift_no}}
@@ -71,7 +71,7 @@
                 </mat-form-field>
           </div>
 
-              <div class="filter_field" *ngIf="login.value.report_type === 'OperatorWise'">
+              <div class="filter_field" *ngIf="login.value.report_type === 'OperatorWise' ">
                 <mat-form-field appearance="outline">
                   <mat-select placeholder="Select Operator" matNativeControl required formControlName="operator_id">
                     <mat-option *ngFor="let operator of operator_response" [value]="operator.id">
